@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -7,7 +9,7 @@ from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
 app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db') #If Database_url not found, we will use postgre uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #This will stop the SQL_Alchemy's object change tracking, since the same is also taken care of by Flask_SQL_Alchemy
 app.secret_key='munjal'
 api=Api(app)
